@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Codon Converter</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <div class="jumbotron">
+          <h1 class="display-4">Transcribe DNA to mRNA</h1>
+          <p class="lead">This website will take DNA and transcribe it into mRNA.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        <form action="/">
+          <div class="form-group">
+            <label for="DNA">DNA:</label><br>
+            <textarea class="form-control" id="DNA" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        <hr class="my-4">
+      </div>
+    </div>
+    <div class="row" id="result" style="display:none;">
+      <div class="col-sm">
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">mRNA</h5>
+            <h6 class="card-subtitle mb-2 text-muted">mRNA transcribed form DNA above</h6>
+            <p class="card-text" id="mRNA"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  <script>
+    $("form").submit(function (event) {
+      const dna = $("#DNA").val();
+      $.post("/",
+        {
+          dna: dna,
+        },
+        function (data, status) {
+          $("#mRNA").text(data);
+          $("#result").css("display", "block");
+        });
+      event.preventDefault();
+    });
+  </script>
+</body>
+
+</html>
